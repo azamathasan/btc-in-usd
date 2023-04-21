@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Convert btc in usd</title>
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+    <!-- <script src="vue.global.js"></script> -->
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script> -->
+    <script src="axios.min.js"></script>
+  </head>
+  <body>
+    <main>
+        <h1>Convert btc in usd</h1>  
+        <label><input type="text" size="40" id="input"></label>
+        <button onclick="toConvert()">Convert</button>
+        <label><input type="text" size="40" id="output" readonly    ></label>
+    </main>
+    
+    <script>
+        async function toConvert() {
+            console.log('*toConvert');
+            let input = document.getElementById('input');
+            let output = document.getElementById('output');
+
+
+            const getRate = async () => {
+                try {
+                    const response = await axios.get(`https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT`)
+                    return response.data
+                } catch (err) {
+                    console.error(err.toJSON())
+                }
+                }
+            let rate = await getRate();
+            output.value=(+input.value)*(+rate.price)
+            console.log(JSON.stringify(rate))
+            console.log(rate.price)
+            console.log(input.value)
+        }
+    </script>
+  </body>
+</html>
